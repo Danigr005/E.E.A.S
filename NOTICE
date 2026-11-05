@@ -1,10 +1,10 @@
-CWCDT — Code With Codex Dev Team
+EEAS — Code With Codex Dev Team
 Copyright (c) 2026 Danigr005. Released under the MIT License (see LICENSE).
 
 THIRD-PARTY MATERIAL
 
 This project contains material derived from ECC (Everything Claude Code):
-  - rules/cwcdt/** : condensed or adapted from ECC's rule files;
+  - core/rules/** : condensed or adapted from ECC's rule files;
   - the agent, skill and command names that the router table in lang/*/CLAUDE.md refers to belong to ECC.
 ECC is not bundled: it is installed separately as a plugin. Source: https://github.com/affaan-m/ECC
 ECC's license, reproduced as required:
@@ -35,6 +35,6 @@ SOFTWARE.
 
 AFFILIATION AND TRADEMARKS
 
-CWCDT is an independent community project. It is not affiliated with, sponsored by or endorsed by Anthropic, OpenAI or the authors of ECC.
+EEAS is an independent community project. It is not affiliated with, sponsored by or endorsed by Anthropic, OpenAI or the authors of ECC.
 "Claude" and "Claude Code" are trademarks of Anthropic, PBC. "Codex", "ChatGPT" and "OpenAI" are trademarks of OpenAI. They are used here only
 to describe compatibility. Model names mentioned in the documentation are examples and may change.

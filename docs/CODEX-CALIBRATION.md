@@ -1,6 +1,6 @@
 # Codex ↔ Claude calibration log
 
-Log every real delegation to correct the model table in `lang/<l>/skills/cwcdt-playbook/SKILL.md`.
+Log every real delegation to correct the model table in `lang/<l>/skills/eeas-playbook/SKILL.md`.
 
 | Date | Task (type) | Model / effort | Rounds | Accepted on the 1st try? | Notes (quota spent, failures) |
 |---|---|---|---|---|---|

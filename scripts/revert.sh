@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Undo scripts/apply.sh using one of its backups (default: the most recent = undo the last apply).
 #   scripts/revert.sh [--original | <backup-dir>]
-# --original uses the oldest backup, i.e. the state before CWCDT was ever applied.
+# --original uses the oldest backup, i.e. the state before EEAS was ever applied.
 set -euo pipefail
 # shellcheck source=common.sh
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
@@ -50,10 +50,13 @@ echo "Restoring from $BACKUP"
 restore_moved "$CLAUDE_DIR/CLAUDE.md"
 restore_moved "$CLAUDE_DIR/rules/ecc"
 restore_moved "$CLAUDE_DIR/rules/cwcdt"
+restore_moved "$CLAUDE_DIR/rules/eeas"
 restore_moved "$CLAUDE_DIR/skills/owner-playbook"
 restore_moved "$CLAUDE_DIR/skills/cwcdt-playbook"
+restore_moved "$CLAUDE_DIR/skills/eeas-playbook"
+restore_moved "$CLAUDE_DIR/skills/eeas-teams"
 restore_moved "$CODEX_DIR/AGENTS.md"
 restore_copied "$CLAUDE_DIR/settings.json"
 restore_copied "$CODEX_DIR/config.toml"
-rm -f -- "$CLAUDE_DIR/cwcdt.lang" "$CLAUDE_DIR/cwcdt.profile"
+rm -f -- "$CLAUDE_DIR"/{eeas,cwcdt}.{lang,profile}
 echo "Done."

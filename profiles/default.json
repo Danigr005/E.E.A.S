@@ -4,6 +4,16 @@
     "type": "command",
     "command": "node {{MASTER}}/statusline.mjs"
   },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          { "type": "command", "command": "python3 -I \"{{MASTER}}/scripts/eeas-session.py\"" }
+        ]
+      }
+    ]
+  },
   "autoCompactWindow": 300000,
   "skillListingBudgetFraction": 0.005,
   "skillListingMaxDescChars": 220,

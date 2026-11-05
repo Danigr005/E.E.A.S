@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install CWCDT on this machine. Idempotent; whatever it replaces is kept in a timestamped backup.
+# Install EEAS (teams of agents and subagents) on this machine. Idempotent; whatever it replaces is kept in a timestamped backup.
 #   scripts/apply.sh [--lang en|es] [--profile NAME] [--codex-default-model MODEL] [--no-codex] [--dry-run]
 set -euo pipefail
 # shellcheck source=common.sh
@@ -31,7 +31,7 @@ if [[ ! -f "$MASTER/profiles/$PROFILE.json" ]]; then
   exit 2
 fi
 
-BACKUP="$CLAUDE_DIR/backups/cwcdt-$(date +%Y%m%d-%H%M%S)"
+BACKUP="$CLAUDE_DIR/backups/eeas-$(date +%Y%m%d-%H%M%S)"
 
 act() { if (( DRY )); then echo "  [dry-run] $*"; else "$@"; fi; }
 
@@ -74,9 +74,12 @@ echo "== language: $LANG_CODE | profile: $PROFILE =="
 echo "== links ($CLAUDE_DIR) =="
 drop_legacy_link "$CLAUDE_DIR/rules/ecc"
 drop_legacy_link "$CLAUDE_DIR/skills/owner-playbook"
+drop_legacy_link "$CLAUDE_DIR/rules/cwcdt"
+drop_legacy_link "$CLAUDE_DIR/skills/cwcdt-playbook"
 link "$MASTER/lang/$LANG_CODE/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
-link "$MASTER/rules/cwcdt" "$CLAUDE_DIR/rules/cwcdt"
-link "$MASTER/lang/$LANG_CODE/skills/cwcdt-playbook" "$CLAUDE_DIR/skills/cwcdt-playbook"
+link "$MASTER/core/rules" "$CLAUDE_DIR/rules/eeas"
+link "$MASTER/lang/$LANG_CODE/skills/eeas-playbook" "$CLAUDE_DIR/skills/eeas-playbook"
+link "$MASTER/lang/$LANG_CODE/skills/eeas-teams" "$CLAUDE_DIR/skills/eeas-teams"
 
 echo "== settings.json =="
 managed=(--managed "$MASTER/profiles/default.json")
@@ -132,8 +135,9 @@ if (( DRY )); then
   echo "dry-run: nothing was changed"
 else
   mkdir -p "$CLAUDE_DIR"
-  printf '%s\n' "$LANG_CODE" >"$CLAUDE_DIR/cwcdt.lang"
-  printf '%s\n' "$PROFILE" >"$CLAUDE_DIR/cwcdt.profile"
+  printf '%s\n' "$LANG_CODE" >"$CLAUDE_DIR/eeas.lang"
+  printf '%s\n' "$PROFILE" >"$CLAUDE_DIR/eeas.profile"
+  rm -f -- "$CLAUDE_DIR/cwcdt.lang" "$CLAUDE_DIR/cwcdt.profile"
   if [[ -d "$BACKUP" ]]; then echo "backup: $BACKUP"; fi
   "$MASTER/scripts/check.sh" || echo "(check.sh reported issues above)"
 fi

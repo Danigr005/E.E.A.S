@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verify CWCDT is applied correctly. Exit code 1 if anything is off.
+# Verify EEAS is applied correctly. Exit code 1 if anything is off.
 #   scripts/check.sh            (set CWCDT_SKIP_TOOLBOX_CHECK=1 to skip the `claude plugin list` check)
 set -uo pipefail
 # shellcheck source=common.sh
@@ -18,13 +18,14 @@ PROFILE="$(state_get profile default)"
 
 echo "== links (language: $LANG_CODE, profile: $PROFILE) =="
 is_link "$MASTER/lang/$LANG_CODE/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
-is_link "$MASTER/rules/cwcdt" "$CLAUDE_DIR/rules/cwcdt"
-is_link "$MASTER/lang/$LANG_CODE/skills/cwcdt-playbook" "$CLAUDE_DIR/skills/cwcdt-playbook"
+is_link "$MASTER/core/rules" "$CLAUDE_DIR/rules/eeas"
+is_link "$MASTER/lang/$LANG_CODE/skills/eeas-playbook" "$CLAUDE_DIR/skills/eeas-playbook"
+is_link "$MASTER/lang/$LANG_CODE/skills/eeas-teams" "$CLAUDE_DIR/skills/eeas-teams"
 if [[ -d "$CODEX_DIR" ]]; then
   if [[ -L "$CODEX_DIR/AGENTS.md" ]]; then is_link "$MASTER/codex/AGENTS.md" "$CODEX_DIR/AGENTS.md"; else warn "$CODEX_DIR/AGENTS.md is not linked (apply.sh --no-codex, or a file of your own)"; fi
 fi
 if [[ -d "$CLAUDE_DIR/rules/ecc" && ! -L "$CLAUDE_DIR/rules/ecc" ]]; then
-  warn "$CLAUDE_DIR/rules/ecc is a real directory (manual ECC rules install): its common rules duplicate rules/cwcdt/common/core.md"
+  warn "$CLAUDE_DIR/rules/ecc is a real directory (manual ECC rules install): its common rules duplicate core/rules/common/core.md"
 fi
 
 echo "== settings.json =="
@@ -56,6 +57,13 @@ else
     warn "codex@openai-codex not enabled (optional: only needed for Codex delegation)"
   fi
 fi
+
+echo "== teams =="
+for manifest in "$MASTER"/teams/*/team.json; do
+  [[ -e "$manifest" ]] || continue
+  id="$(basename "$(dirname "$manifest")")"
+  if [[ -f "$MASTER/teams/$id/lang/es/TEAM.md" || -f "$MASTER/teams/$id/lang/en/TEAM.md" ]]; then ok "team $id"; else bad "team $id has no TEAM.md"; fi
+done
 
 echo "== repo =="
 en_lines="$(wc -l <"$MASTER/lang/en/CLAUDE.md")"

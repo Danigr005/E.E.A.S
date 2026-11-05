@@ -27,7 +27,7 @@ for lang_dir in "$MASTER"/lang/*/; do
     cp -a "$C" "$C.orig"
     cp -a "$X" "$X.orig"
     # an earlier layout of this repo left a link behind (created after the snapshot, so revert must remove it)
-    ln -s "$MASTER/rules/cwcdt" "$C/rules/ecc"
+    ln -s "$MASTER/core/rules" "$C/rules/ecc"
 
     export CLAUDE_DIR="$C" CODEX_DIR="$X" CWCDT_SKIP_TOOLBOX_CHECK=1
     if "$MASTER/scripts/apply.sh" --lang "$lang" --profile "$profile" --codex-default-model gpt-test >"$T/apply.out" 2>&1; then pass "apply"; else fail "apply"; sed 's/^/      /' "$T/apply.out"; fi
@@ -36,11 +36,19 @@ for lang_dir in "$MASTER"/lang/*/; do
     grep -q 'gpt-test' "$X/config.toml" && pass "codex default model set" || fail "codex default model not set"
     grep -q '"theme": "dark"' "$C/settings.json" && grep -q 'Bash(rm -rf /)' "$C/settings.json" && pass "existing settings preserved" || fail "existing settings lost"
 
+    # team selection: no team -> prompt; assigned team -> its TEAM.md
+    P="$T/$lang-$profile/project"; mkdir -p "$P"
+    ctx="$(echo "{\"cwd\":\"$P\"}" | python3 -I "$MASTER/scripts/eeas-session.py")"
+    grep -q 'no team assigned' <<<"$ctx" && pass "hook asks for a team when none is set" || fail "hook did not ask for a team"
+    "$MASTER/scripts/eeas-team.sh" set projects-master "$P" >/dev/null && pass "team assigned"
+    ctx="$(echo "{\"cwd\":\"$P/sub\"}" | python3 -I "$MASTER/scripts/eeas-session.py")"
+    grep -q 'active team: projects-master' <<<"$ctx" && pass "hook injects the assigned team" || fail "hook did not inject the team"
+
     "$MASTER/scripts/apply.sh" --lang "$lang" --profile "$profile" --codex-default-model gpt-test >"$T/apply2.out" 2>&1
     if grep -E '^  (linked|set|removed)' "$T/apply2.out" >/dev/null; then fail "second apply is not a no-op"; sed 's/^/      /' "$T/apply2.out"; else pass "second apply is a no-op"; fi
 
     "$MASTER/scripts/revert.sh" --original >"$T/revert.out" 2>&1
-    if diff -r -x backups -x skills -x 'cwcdt.*' "$C" "$C.orig" >"$T/diff.out" 2>&1 && diff -r "$X" "$X.orig" >>"$T/diff.out" 2>&1; then
+    if diff -r -x backups -x skills -x 'eeas.*' -x 'cwcdt.*' "$C" "$C.orig" >"$T/diff.out" 2>&1 && diff -r "$X" "$X.orig" >>"$T/diff.out" 2>&1; then
       pass "revert --original restores the starting state"
     else
       fail "revert left differences"; sed 's/^/      /' "$T/diff.out"

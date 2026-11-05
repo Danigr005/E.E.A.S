@@ -1,4 +1,4 @@
-# Shared helpers for the CWCDT scripts. Source it; do not execute it.
+# Shared helpers for the EEAS scripts. Source it; do not execute it.
 # Written for bash 3.2+ (macOS default) and GNU/Linux.
 
 MASTER="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -11,15 +11,18 @@ flat() { echo "${1#/}" | tr '/' '_'; }
 # real <path> : canonical path (readlink -f is not portable)
 real() { python3 -I -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$1"; }
 
-# state_get <name> <default> : value saved by apply.sh in $CLAUDE_DIR/cwcdt.<name>
+# state_get <name> <default> : value saved by apply.sh in $CLAUDE_DIR/eeas.<name> (cwcdt.<name> = earlier name)
 state_get() {
-  local file="$CLAUDE_DIR/cwcdt.$1"
-  if [[ -f "$file" ]]; then tr -d '[:space:]' <"$file"; else echo "$2"; fi
+  local file
+  for file in "$CLAUDE_DIR/eeas.$1" "$CLAUDE_DIR/cwcdt.$1"; do
+    if [[ -f "$file" ]]; then tr -d '[:space:]' <"$file"; return; fi
+  done
+  echo "$2"
 }
 
 # backups_oldest_first : every backup directory this tool (or its earlier name) created
 backups_oldest_first() {
-  ls -dtr "$CLAUDE_DIR"/backups/cwcdt-* "$CLAUDE_DIR"/backups/claude-setup-* 2>/dev/null || true
+  ls -dtr "$CLAUDE_DIR"/backups/eeas-* "$CLAUDE_DIR"/backups/cwcdt-* "$CLAUDE_DIR"/backups/claude-setup-* 2>/dev/null || true
 }
 
 # with_timeout <seconds> <command...> : use timeout/gtimeout when available, otherwise just run

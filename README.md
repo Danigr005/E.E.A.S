@@ -1,4 +1,4 @@
-# CWCDT — Code With Codex Dev Team
+# E.E.A.S — Specialized Teams of Agents and Subagents
 
 An autonomous, two-gate development methodology for AI coding agents. **You say what you want. Claude Code leads a team of specialist
 subagents, hands the mechanical, machine-verifiable parts to Codex, and stops you only twice: to approve the plan and to confirm the
@@ -12,12 +12,24 @@ English · [Español](README.es.md)
 ## Why
 
 Agent setups tend to grow into a pile of agents, skills, hooks and rules that nobody can explain, and that quietly eat your context window and
-quota before you type a word. CWCDT is the opposite: a small, opinionated operating manual plus a few scripts that
+quota before you type a word. EEAS is the opposite: a small, opinionated operating manual plus a few scripts that
 
 - decide **who does what** (a router table and a four-point delegation rule),
 - keep **you in control** where it matters (two gates; never push, merge or delete without your OK),
 - spend **fewer tokens** (the fixed prompt of the reference setup went from 81.3k to 60.4k tokens, −26%, measured on real requests), and
 - are **reproducible and reversible** (one repo, symlinks, backups, a sandbox test).
+
+## Teams (E.E.A.S.)
+
+The repo holds several **teams** on top of a mandatory common layer (Claude↔Codex split, waves, token saving, gates). Each project stores its team
+in `.claude/eeas-team`; a SessionStart hook loads it every session, and Claude asks once if the project has none. The team changes only if you ask.
+
+| Team | For |
+|---|---|
+| `projects-master` — Projects Master Dev Team | Building and maintaining software projects (formerly CWCDT) |
+| `sdd` — SDD Dev Team | Spec-driven development with [GitHub spec-kit](https://github.com/github/spec-kit) |
+
+`scripts/eeas-team.sh list | show | set <id> [dir]` manages them; to add one, ask Claude (skill `eeas-teams`) or copy `teams/projects-master`.
 
 ## The loop
 
@@ -43,12 +55,12 @@ quota before you type a word. CWCDT is the opposite: a small, opinionated operat
 | Piece | What it does |
 |---|---|
 | `lang/{en,es}/CLAUDE.md` | The operating manual Claude reads every session: router table, delegation rule, waves, token habits, compaction instructions. Small on purpose (≈3.5k tokens). |
-| `lang/{en,es}/skills/cwcdt-playbook` | The long-form detail (models and effort, brief template, waves protocol, token tips), loaded only when needed. |
-| `rules/cwcdt/` | One core rule (style, testing, security, review, git) plus per-language rules that load only when you touch matching files. |
+| `lang/{en,es}/skills/eeas-playbook` | The long-form detail (models and effort, brief template, waves protocol, token tips), loaded only when needed. |
+| `core/rules/` | One core rule (style, testing, security, review, git) plus per-language rules that load only when you touch matching files. |
 | `profiles/` | Settings merged into `~/.claude/settings.json`: auto-compact window, skill-listing budget, hook tuning; stack profiles that switch off agents you never use. |
 | `codex/AGENTS.md` | What Codex must do when Claude delegates a task to it. |
 | `statusline.mjs` | `ctx used/window · cache · 5h · 7d` and a hint to `/compact`. |
-| `scripts/` | `apply`, `check`, `revert`, `measure`, `ecc-update`, `test-sandbox`. |
+| `scripts/` | `apply`, `check`, `revert`, `measure`, `toolbox-update`, `test-sandbox`. |
 
 ## Quick start (about 10 minutes)
 
@@ -56,7 +68,7 @@ Requirements: [Claude Code](https://claude.com/claude-code), `git`, `python3`, N
 Tested on Linux; macOS should work (the scripts avoid GNU-only features) but is untested; on Windows use WSL.
 
 ```bash
-# 1. The toolbox: ECC (MIT) provides the agents and skills CWCDT routes to
+# 1. The toolbox: ECC (MIT) provides the agents and skills EEAS routes to
 claude plugin marketplace add affaan-m/ECC
 claude plugin install ecc@ecc
 
@@ -65,14 +77,14 @@ npm i -g @openai/codex && codex login
 claude plugin marketplace add openai/codex-plugin-cc
 claude plugin install codex@openai-codex
 
-# 3. Get CWCDT, preview, then apply
-git clone https://github.com/Danigr005/CWCDT.git ~/CWCDT
-~/CWCDT/scripts/apply.sh --dry-run --lang en
-~/CWCDT/scripts/apply.sh --lang en            # Spanish: --lang es ; TS/Python/Rust stack: --profile ts-py-rust
+# 3. Get EEAS, preview, then apply
+git clone https://github.com/Danigr005/EEAS.git ~/EEAS
+~/EEAS/scripts/apply.sh --dry-run --lang en
+~/EEAS/scripts/apply.sh --lang en            # Spanish: --lang es ; TS/Python/Rust stack: --profile ts-py-rust
 
 # 4. Restart Claude Code, then check and measure
-~/CWCDT/scripts/check.sh
-~/CWCDT/scripts/measure.sh first --real
+~/EEAS/scripts/check.sh
+~/EEAS/scripts/measure.sh first --real
 ```
 
 Then just ask for something. `apply.sh` keeps a backup of whatever it replaces (`~/.claude/backups/cwcdt-<date>/`) and
@@ -86,12 +98,12 @@ Your existing `~/.claude/CLAUDE.md` is moved to that backup, not merged. Copy yo
 Everything that defines the methodology lives in this repo. On a fresh machine:
 
 ```bash
-git clone https://github.com/Danigr005/CWCDT.git ~/CLAUDE-PROJECTS/CWCDT
-~/CLAUDE-PROJECTS/CWCDT/scripts/bootstrap.sh --lang en --profile ts-py-rust
+git clone https://github.com/Danigr005/EEAS.git ~/CLAUDE-PROJECTS/E.E.A.S
+~/CLAUDE-PROJECTS/E.E.A.S/scripts/bootstrap.sh --lang en --profile ts-py-rust
 codex login        # and open `claude` to sign in
 ```
 
-`bootstrap.sh` installs ECC and the Codex plugin, applies CWCDT and checks it. Deliberately **not** in git: conversation
+`bootstrap.sh` installs ECC and the Codex plugin, applies EEAS and checks it. Deliberately **not** in git: conversation
 history, logins and secrets (redo them with `claude` / `codex login`).
 
 ## Learn more

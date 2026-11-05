@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# One-shot setup for a fresh machine: installs the toolbox plugins, then applies and checks CWCDT.
+# One-shot setup for a fresh machine: installs the toolbox plugins, then applies and checks EEAS.
 #   scripts/bootstrap.sh [--lang en|es] [--profile NAME] [--no-codex]
-# Everything CWCDT needs is either in this repo or reinstalled from here; conversation history, logins and
+# Everything EEAS needs is either in this repo or reinstalled from here; conversation history, logins and
 # secrets are deliberately NOT in git (log in again with `claude` and `codex login`).
 set -euo pipefail
 # shellcheck source=common.sh
@@ -36,7 +36,14 @@ else
   APPLY_ARGS+=(--no-codex)
 fi
 
-echo "== CWCDT =="
+echo "== SDD Dev Team (spec-kit CLI) =="
+if command -v uv >/dev/null; then
+  command -v specify >/dev/null || uv tool install specify-cli --from git+https://github.com/github/spec-kit.git || true
+else
+  echo "uv not found: install it (https://docs.astral.sh/uv/) to use the SDD Dev Team; teams/sdd/setup.sh installs specify on demand."
+fi
+
+echo "== EEAS =="
 "$MASTER/scripts/apply.sh" "${APPLY_ARGS[@]}"
 "$MASTER/scripts/check.sh"
 echo "Done. Restart Claude Code."

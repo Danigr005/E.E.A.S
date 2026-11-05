@@ -1,4 +1,4 @@
-# Cómo funciona CWCDT
+# Cómo funciona EEAS
 
 [English](../HOW-IT-WORKS.md)
 
@@ -10,7 +10,7 @@ escribe un plan y espera tu aprobación. Después construye con tests primero, e
 dos puertas no te pregunta qué agente o skill usar. Durante todo el proceso el contexto se mantiene pequeño y medido, así que las sesiones van
 rápidas y la cuota dura más.
 
-CWCDT no es un framework de agentes nuevo. Es un **manual de operación** (`CLAUDE.md`), unas pocas **reglas**, un **perfil de ajustes** y
+EEAS no es un framework de agentes nuevo. Es un **manual de operación** (`CLAUDE.md`), unas pocas **reglas**, un **perfil de ajustes** y
 **scripts** que hacen que Claude Code, la caja de herramientas [ECC](https://github.com/affaan-m/ECC) y Codex funcionen como un solo equipo.
 
 ## 2. Roles
@@ -44,13 +44,13 @@ empieza con un PRD y un flujo de MVP (`orch-build-mvp`).
 
 **¿Cómo de firmes son las puertas?** Son instrucciones de `CLAUDE.md` que Claude sigue, respaldadas por el modo plan y las confirmaciones de
 permisos de Claude Code. Si necesitas una garantía dura (por ejemplo, ningún `git push` sin confirmación), añade además una regla en
-`permissions.ask` o `permissions.deny` de tus ajustes. CWCDT no finge que el texto sea por sí solo una frontera de seguridad.
+`permissions.ask` o `permissions.deny` de tus ajustes. EEAS no finge que el texto sea por sí solo una frontera de seguridad.
 
 ## 4. El enrutador
 
 La tabla de `CLAUDE.md` es el corazón del «modo autónomo»: el dueño nunca elige un agente. Cada fila nombra las skills y agentes de un tipo de
 trabajo. Mantenla corta: cada fila cuesta tokens en cada sesión. Para cambiarla, edita `lang/<l>/CLAUDE.md` en el repo (ver
-[CUSTOMIZE](../CUSTOMIZE.md), en inglés). Las reglas que valen para todo están en `rules/cwcdt/common/core.md`; las de cada lenguaje (`python/`,
+[CUSTOMIZE](../CUSTOMIZE.md), en inglés). Las reglas que valen para todo están en `core/rules/common/core.md`; las de cada lenguaje (`python/`,
 `rust/`, `typescript/`, `web/`) solo se cargan al tocar ficheros que coinciden.
 
 ## 5. Delegar a Codex
@@ -75,7 +75,7 @@ trabajo. Mantenla corta: cada fila cuesta tokens en cada sesión. Para cambiarla
 | Tareas largas en segundo plano, revisiones de solo lectura | Integración, merge, orquestación |
 
 **Modelos y esfuerzo.** Modelos ligeros para lo mecánico, uno de trabajo diario para lo habitual y el de frontera solo para revisar y casos
-difíciles; los niveles de Claude se usan igual (tabla en el [playbook](../../lang/es/skills/cwcdt-playbook/SKILL.md)). Elige modelo y esfuerzo al
+difíciles; los niveles de Claude se usan igual (tabla en el [playbook](../../lang/es/skills/eeas-playbook/SKILL.md)). Elige modelo y esfuerzo al
 empezar la tarea: cambiarlos a mitad rompe la caché del prompt.
 
 **Flujo.** Brief (objetivo, ficheros propios, interfaz, comando de aceptación, «sin commit ni push») → rama o worktree aparte →
@@ -100,7 +100,7 @@ límites de contexto: la maestra puede guardar su estado (`save-session`) y tú 
 ## 7. Contexto y tokens
 
 Cada petición vuelve a leer el «prompt fijo»: prompt del sistema, definiciones de herramientas, tus ficheros de memoria y las listas de skills y
-agentes. CWCDT reduce lo que controlas (memoria, lista de skills, lista de agentes) y limita cuánto puede crecer una conversación
+agentes. EEAS reduce lo que controlas (memoria, lista de skills, lista de agentes) y limita cuánto puede crecer una conversación
 (`autoCompactWindow`, instrucciones de compactación, una barra de estado que avisa). Detalles, cifras y método de medida:
 [TOKEN-ECONOMY](../TOKEN-ECONOMY.md) (en inglés).
 
@@ -132,9 +132,9 @@ agentes. CWCDT reduce lo que controlas (memoria, lista de skills, lista de agent
 | Ruta | Para qué |
 |---|---|
 | `lang/<l>/CLAUDE.md` → `~/.claude/CLAUDE.md` | El manual de operación |
-| `lang/<l>/skills/cwcdt-playbook` → `~/.claude/skills/cwcdt-playbook` | Detalle bajo demanda |
-| `rules/cwcdt` → `~/.claude/rules/cwcdt` | Reglas base y por lenguaje |
+| `lang/<l>/skills/eeas-playbook` → `~/.claude/skills/eeas-playbook` | Detalle bajo demanda |
+| `core/rules` → `~/.claude/rules/eeas` | Reglas base y por lenguaje |
 | `profiles/*.json` → fusionados en `~/.claude/settings.json` | Ajuste de contexto y hooks, perfiles de stack |
 | `codex/AGENTS.md` → `~/.codex/AGENTS.md` | Reglas para Codex al recibir una tarea delegada |
-| `~/.claude/cwcdt.lang`, `cwcdt.profile` | Recuerdan tus elecciones para que `apply.sh` y `check.sh` coincidan |
+| `~/.claude/eeas.lang`, `eeas.profile` | Recuerdan tus elecciones para que `apply.sh` y `check.sh` coincidan |
 | `~/.claude/backups/cwcdt-<fecha>/` | Todo lo que `apply.sh` sustituyó |

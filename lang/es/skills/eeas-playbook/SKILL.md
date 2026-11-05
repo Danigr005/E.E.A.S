@@ -1,9 +1,9 @@
 ---
-name: cwcdt-playbook
-description: Playbook de CWCDT para encargos grandes: delegación Claude↔Codex (modelos, esfuerzo, plantilla de brief, calibración), protocolo de olas (sesiones enlazadas) y hábitos de ahorro de tokens y retención de contexto. Úsalo antes de delegar a Codex, de lanzar sesiones enlazadas o de planificar un encargo grande.
+name: eeas-playbook
+description: Playbook EEAS (capa común) para encargos grandes: delegación Claude↔Codex (modelos, esfuerzo, plantilla de brief, calibración), protocolo de olas (sesiones enlazadas) y hábitos de ahorro de tokens y retención de contexto. Úsalo antes de delegar a Codex, de lanzar sesiones enlazadas o de planificar un encargo grande.
 ---
 
-# Playbook de CWCDT
+# Playbook EEAS (capa común)
 
 Detalle de lo que `CLAUDE.md` solo resume. Se carga bajo demanda para no pagar estos tokens en cada turno.
 
@@ -94,8 +94,8 @@ Qué haces tú (o yo) a mano:
 - Medir: `scripts/measure.sh <etiqueta> [--real]` (coste fijo de contexto); `/usage` (desglose por skills, agentes, plugins, MCP); `/doctor` y
   `/skill-doctor` (coste de la lista de skills y skills sin uso).
 
-## 4. Mantenimiento (desde el repo de CWCDT)
+## 4. Mantenimiento (desde el repo EEAS)
 - `scripts/apply.sh [--dry-run]`: enlaces + ajustes + Codex (idempotente, con copia de seguridad en `~/.claude/backups/`).
 - `scripts/check.sh`: verifica enlaces, ajustes y el plugin de la caja de herramientas.
-- `scripts/ecc-update.sh [--pull]`: comprueba si ECC tiene novedades; revisa el diff antes de `--pull`.
+- `scripts/toolbox-update.sh [--pull]`: comprueba si ECC tiene novedades; revisa el diff antes de `--pull`.
 - Revertir: `scripts/revert.sh [--original]`.

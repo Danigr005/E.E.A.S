@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased
+- **EEAS (Specialized Teams of Agents and Subagents).** The repo is now a collection of teams over a mandatory common layer. `core/` holds the shared
+  rules; `lang/<l>/CLAUDE.md` is the common layer + team router (Claude↔Codex split, waves, tokens, gates); `teams/<id>/` holds each team.
+- Per-project team persistence: `.claude/eeas-team` + SessionStart hook (`scripts/eeas-session.py`) + skill `eeas-teams` + `scripts/eeas-team.sh`.
+- CWCDT is now the team **Projects Master Dev Team** (`teams/projects-master`). New team **SDD Dev Team** (`teams/sdd`) on GitHub spec-kit.
+- Toolbox labels are ours: `ecc.lock` → `toolbox.lock`, `ECC-src/` → `toolbox-src/`, `scripts/ecc-update.sh` → `scripts/toolbox-update.sh` (`ECC_REPO` → `TOOLBOX_REPO`). The third-party plugin keeps its id `ecc@ecc`.
+- Renames: `cwcdt-playbook` → `eeas-playbook`, `rules/cwcdt` → `core/rules` (linked as `~/.claude/rules/eeas`), state files `cwcdt.*` → `eeas.*`.
 - `scripts/bootstrap.sh`: one-shot restore on a new machine (toolbox plugins + apply + check). README "New laptop" section.
 
 ## 0.1.0 — 2026-11-05

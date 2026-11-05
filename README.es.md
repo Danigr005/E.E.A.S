@@ -1,4 +1,4 @@
-# CWCDT — Code With Codex Dev Team
+# E.E.A.S — Equipos Especializados de Agentes y Subagentes
 
 Una metodología de desarrollo autónoma, de dos puertas, para agentes de programación con IA. **Tú dices qué quieres. Claude Code dirige un
 equipo de subagentes especialistas, entrega a Codex las partes mecánicas y verificables por máquina, y solo te para dos veces: para aprobar el
@@ -12,13 +12,25 @@ plan y para confirmar el commit.** Todo dentro de un presupuesto de contexto red
 ## Por qué
 
 Las configuraciones de agentes suelen crecer hasta ser un montón de agentes, skills, hooks y reglas que nadie sabe explicar, y que se comen en
-silencio tu ventana de contexto y tu cuota antes de que escribas nada. CWCDT es lo contrario: un manual de operación pequeño y con criterio, más
+silencio tu ventana de contexto y tu cuota antes de que escribas nada. EEAS es lo contrario: un manual de operación pequeño y con criterio, más
 unos pocos scripts que
 
 - deciden **quién hace qué** (una tabla de enrutado y una regla de delegación de cuatro puntos),
 - te dejan **el control** donde importa (dos puertas; nunca push, merge ni borrados sin tu OK),
 - gastan **menos tokens** (el prompt fijo de la configuración de referencia pasó de 81,3k a 60,4k tokens, −26 %, medido con peticiones reales), y
 - son **reproducibles y reversibles** (un repo, enlaces simbólicos, copias de seguridad, una prueba aislada).
+
+## Equipos (E.E.A.S.)
+
+El repo contiene varios **equipos** sobre una capa común obligatoria (reparto Claude↔Codex, olas, ahorro de tokens, puertas). Cada proyecto guarda su
+equipo en `.claude/eeas-team`; un hook de inicio de sesión lo carga cada vez y Claude pregunta una vez si el proyecto no tiene. El equipo solo cambia si lo pides.
+
+| Equipo | Para |
+|---|---|
+| `projects-master` — Projects Master Dev Team | Crear y mantener proyectos de software (antes CWCDT) |
+| `sdd` — SDD Dev Team | Desarrollo guiado por especificaciones con [GitHub spec-kit](https://github.com/github/spec-kit) |
+
+`scripts/eeas-team.sh list | show | set <id> [dir]` los gestiona; para añadir uno, pídeselo a Claude (skill `eeas-teams`) o copia `teams/projects-master`.
 
 ## El bucle
 
@@ -44,12 +56,12 @@ unos pocos scripts que
 | Pieza | Qué hace |
 |---|---|
 | `lang/{en,es}/CLAUDE.md` | El manual que Claude lee en cada sesión: tabla de enrutado, regla de delegación, olas, hábitos de tokens, instrucciones de compactación. Pequeño a propósito (≈3,5k tokens). |
-| `lang/{en,es}/skills/cwcdt-playbook` | El detalle largo (modelos y esfuerzo, plantilla de brief, protocolo de olas, consejos de tokens), cargado solo cuando hace falta. |
-| `rules/cwcdt/` | Una regla base (estilo, pruebas, seguridad, revisión, git) y reglas por lenguaje que solo se cargan al tocar ficheros que coinciden. |
+| `lang/{en,es}/skills/eeas-playbook` | El detalle largo (modelos y esfuerzo, plantilla de brief, protocolo de olas, consejos de tokens), cargado solo cuando hace falta. |
+| `core/rules/` | Una regla base (estilo, pruebas, seguridad, revisión, git) y reglas por lenguaje que solo se cargan al tocar ficheros que coinciden. |
 | `profiles/` | Ajustes que se fusionan en `~/.claude/settings.json`: ventana de autocompactado, presupuesto de skills, hooks; perfiles de stack que apagan agentes que no usas. |
 | `codex/AGENTS.md` | Qué debe hacer Codex cuando Claude le delega una tarea. |
 | `statusline.mjs` | `ctx usados/ventana · cache · 5h · 7d` y aviso para `/compact`. |
-| `scripts/` | `apply`, `check`, `revert`, `measure`, `ecc-update`, `test-sandbox`. |
+| `scripts/` | `apply`, `check`, `revert`, `measure`, `toolbox-update`, `test-sandbox`. |
 
 ## Inicio rápido (unos 10 minutos)
 
@@ -57,7 +69,7 @@ Requisitos: [Claude Code](https://claude.com/claude-code), `git`, `python3`, Nod
 Probado en Linux; en macOS debería funcionar (los scripts evitan lo exclusivo de GNU) pero no está probado; en Windows usa WSL.
 
 ```bash
-# 1. La caja de herramientas: ECC (MIT) aporta los agentes y skills a los que CWCDT enruta
+# 1. La caja de herramientas: ECC (MIT) aporta los agentes y skills a los que EEAS enruta
 claude plugin marketplace add affaan-m/ECC
 claude plugin install ecc@ecc
 
@@ -66,14 +78,14 @@ npm i -g @openai/codex && codex login
 claude plugin marketplace add openai/codex-plugin-cc
 claude plugin install codex@openai-codex
 
-# 3. Descarga CWCDT, previsualiza y aplica
-git clone https://github.com/Danigr005/CWCDT.git ~/CWCDT
-~/CWCDT/scripts/apply.sh --dry-run --lang es
-~/CWCDT/scripts/apply.sh --lang es            # inglés: --lang en ; stack TS/Python/Rust: --profile ts-py-rust
+# 3. Descarga EEAS, previsualiza y aplica
+git clone https://github.com/Danigr005/EEAS.git ~/EEAS
+~/EEAS/scripts/apply.sh --dry-run --lang es
+~/EEAS/scripts/apply.sh --lang es            # inglés: --lang en ; stack TS/Python/Rust: --profile ts-py-rust
 
 # 4. Reinicia Claude Code; comprueba y mide
-~/CWCDT/scripts/check.sh
-~/CWCDT/scripts/measure.sh primera --real
+~/EEAS/scripts/check.sh
+~/EEAS/scripts/measure.sh primera --real
 ```
 
 Después, pide lo que quieras. `apply.sh` guarda una copia de lo que sustituye (`~/.claude/backups/cwcdt-<fecha>/`) y
@@ -87,12 +99,12 @@ Tu `~/.claude/CLAUDE.md` actual se mueve a esa copia, no se fusiona. Copia tus p
 Todo lo que define la metodología está en este repo. En un equipo nuevo:
 
 ```bash
-git clone https://github.com/Danigr005/CWCDT.git ~/CLAUDE-PROJECTS/CWCDT
-~/CLAUDE-PROJECTS/CWCDT/scripts/bootstrap.sh --lang es --profile ts-py-rust
+git clone https://github.com/Danigr005/EEAS.git ~/CLAUDE-PROJECTS/E.E.A.S
+~/CLAUDE-PROJECTS/E.E.A.S/scripts/bootstrap.sh --lang es --profile ts-py-rust
 codex login        # y abre `claude` para iniciar sesión
 ```
 
-`bootstrap.sh` instala ECC y el plugin de Codex, aplica CWCDT y lo comprueba. **No** está en git, a propósito: el historial de
+`bootstrap.sh` instala ECC y el plugin de Codex, aplica EEAS y lo comprueba. **No** está en git, a propósito: el historial de
 conversaciones, los inicios de sesión y los secretos (se rehacen con `claude` / `codex login`).
 
 ## Más información

@@ -1,4 +1,4 @@
-# Customize CWCDT
+# Customize EEAS
 
 Everything lives in the repo; `scripts/apply.sh` pushes it to `~/.claude` and `~/.codex`. After any edit, run `scripts/apply.sh` (idempotent) and
 `scripts/check.sh`. Edit the repo, never the symlinks: Claude Code refuses to write through symlinks.
@@ -8,7 +8,7 @@ Everything lives in the repo; `scripts/apply.sh` pushes it to `~/.claude` and `~
 - Edit the "Owner preferences" section at the end of `lang/<l>/CLAUDE.md`: the language Claude talks to you in, naming and commit conventions,
   your own do-not-touch rules.
 - Choose the manual's language with `apply.sh --lang en|es`. To add one, copy `lang/en` to `lang/<xx>`, translate `CLAUDE.md` and the playbook's
-  `SKILL.md` (keep `name: cwcdt-playbook`), and run `apply.sh --lang <xx>`. `scripts/check.sh` warns when two translations drift apart in length.
+  `SKILL.md` (keep `name: eeas-playbook`), and run `apply.sh --lang <xx>`. `scripts/check.sh` warns when two translations drift apart in length.
 
 ## 2. Profiles: settings per stack
 
@@ -30,7 +30,7 @@ paid for in every session, in every subagent that loads memory.
 
 ## 4. Models and effort
 
-The model table is in `lang/<l>/skills/cwcdt-playbook/SKILL.md`. Replace the Codex rows with the models your account lists (`codex` model picker,
+The model table is in `lang/<l>/skills/eeas-playbook/SKILL.md`. Replace the Codex rows with the models your account lists (`codex` model picker,
 or `~/.codex/models_cache.json`). To change Codex's default model for direct use: `apply.sh --codex-default-model <model>`. Claude's default
 effort lives in `~/.claude/settings.json` (`modelSettings`, `/effort`). Record what works in [the calibration log](CODEX-CALIBRATION.md).
 
@@ -48,12 +48,12 @@ without a description, invoke it once (use ranks it higher), raise the fraction,
 
 ## 7. Hooks (ECC)
 
-CWCDT keeps ECC's hooks and tunes them through environment variables in the profile's `env` block:
+EEAS keeps ECC's hooks and tunes them through environment variables in the profile's `env` block:
 
 | Variable | Default profile | Effect |
 |---|---|---|
 | `GATEGUARD_BASH_ROUTINE_DISABLED` | `1` | Skips the "state facts" prompt on routine Bash commands; destructive commands are still checked |
-| `GATEGUARD_EXEMPT_GLOBS` | the CWCDT repo and `/tmp/claude-*` | Paths where first-touch edits skip the fact-forcing gate. Add your scratch folders; keep real projects out |
+| `GATEGUARD_EXEMPT_GLOBS` | the EEAS repo and `/tmp/claude-*` | Paths where first-touch edits skip the fact-forcing gate. Add your scratch folders; keep real projects out |
 | `ECC_SESSION_START_MAX_CHARS` | `3000` | Caps the context ECC injects at session start (ECC's default is 8000) |
 | `ECC_CONTEXT_MONITOR_COST_WARNINGS` | `off` | Hides API-rate dollar estimates (not meaningful on a subscription) |
 | `ECC_HOOK_PROFILE` / `ECC_DISABLED_HOOKS` | not set | ECC's own switches: `minimal` / `standard` / `strict`, and a list of hook ids to turn off |
@@ -69,6 +69,6 @@ Run `apply.sh --no-codex` and delete the "Delegation to Codex" section of `lang/
 
 ## 10. Updating ECC, uninstalling
 
-- `scripts/ecc-update.sh` reports news; with a local clone, `--pull` fast-forwards it after you reviewed the diff. Without one, it prints the
-  marketplace commands. CWCDT records the ECC version it was tested with in `ecc.lock`.
-- `scripts/revert.sh` undoes the last apply; `scripts/revert.sh --original` restores the state from before CWCDT.
+- `scripts/toolbox-update.sh` reports news; with a local clone, `--pull` fast-forwards it after you reviewed the diff. Without one, it prints the
+  marketplace commands. EEAS records the ECC version it was tested with in `toolbox.lock`.
+- `scripts/revert.sh` undoes the last apply; `scripts/revert.sh --original` restores the state from before EEAS.

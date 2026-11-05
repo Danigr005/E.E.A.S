@@ -21,7 +21,7 @@ the conversation; that is handled by compaction and habits (below).
 | Agent list (30 agents denied) | 6.4k | ≈3.3k | −3.1k (measured in isolation) |
 | Window before auto-compaction | 967k | 300k | fixed ceiling |
 
-A re-measurement with the final CWCDT layout (`metrics/2026-11-05-after-cwcdt.md`) gave 60.2k, so the result held after the restructuring.
+A re-measurement with the final EEAS layout (`metrics/2026-11-05-after-cwcdt.md`) gave 60.2k, so the result held after the restructuring.
 
 Illustration, not a measurement of your usage: a 100-turn session re-reads about 2.1M fewer cached tokens, and each subagent that loads the memory
 files writes about 12k fewer tokens in its first request.
@@ -30,7 +30,7 @@ files writes about 12k fewer tokens in its first request.
 
 | Lever | What it does | Where |
 |---|---|---|
-| Small memory | One compact `CLAUDE.md` plus one core rule; no imported duplicates; detail in an on-demand skill | `lang/*/CLAUDE.md`, `rules/cwcdt/common/core.md`, the playbook |
+| Small memory | One compact `CLAUDE.md` plus one core rule; no imported duplicates; detail in an on-demand skill | `lang/*/CLAUDE.md`, `core/rules/common/core.md`, the playbook |
 | Skill-list budget | `skillListingBudgetFraction` 0.005 and `skillListingMaxDescChars` 220 | `profiles/default.json` |
 | Fewer agents | `permissions.deny` for agents of stacks you do not use | stack profiles |
 | Compaction ceiling | `autoCompactWindow` 300k, "Compact instructions" in `CLAUDE.md`, status-line hint | `profiles/default.json`, `CLAUDE.md`, `statusline.mjs` |

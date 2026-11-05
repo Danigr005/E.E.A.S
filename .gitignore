@@ -1,6 +1,5 @@
 # Privado o local: no subir a GitHub
 backups/
-ECC-src/
 *.log
 *.tmp
 .env

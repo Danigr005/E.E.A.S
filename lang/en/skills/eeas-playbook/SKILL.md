@@ -1,9 +1,9 @@
 ---
-name: cwcdt-playbook
-description: CWCDT playbook for big jobs: Claude↔Codex delegation (models, effort, brief template, calibration), the linked-sessions (waves) protocol, and habits for saving tokens and keeping context. Use it before delegating to Codex, before launching linked sessions, or before planning a large job.
+name: eeas-playbook
+description: EEAS playbook (common layer) for big jobs: Claude↔Codex delegation (models, effort, brief template, calibration), the linked-sessions (waves) protocol, and habits for saving tokens and keeping context. Use it before delegating to Codex, before launching linked sessions, or before planning a large job.
 ---
 
-# CWCDT playbook
+# EEAS playbook (common layer)
 
 The detail that `CLAUDE.md` only summarizes. It loads on demand so these tokens are not paid on every turn.
 
@@ -93,8 +93,8 @@ What you (or I) do by hand:
 - Measure: `scripts/measure.sh <label> [--real]` (fixed context cost); `/usage` (breakdown by skills, agents, plugins, MCP); `/doctor` and
   `/skill-doctor` (skill-listing cost and unused skills).
 
-## 4. Maintenance (from the CWCDT repo)
+## 4. Maintenance (from the EEAS repo)
 - `scripts/apply.sh [--dry-run]`: links + settings + Codex (idempotent, backup in `~/.claude/backups/`).
 - `scripts/check.sh`: verifies links, settings and the toolbox plugin.
-- `scripts/ecc-update.sh [--pull]`: checks the ECC toolbox for news; review the diff before pulling.
+- `scripts/toolbox-update.sh [--pull]`: checks the ECC toolbox for news; review the diff before pulling.
 - Revert: `scripts/revert.sh [--original]`.

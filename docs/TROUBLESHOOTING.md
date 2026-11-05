@@ -2,7 +2,7 @@
 
 ## Problems
 
-**"Refusing to write … it is a symbolic link."** `~/.claude/CLAUDE.md` and friends are symlinks into the CWCDT repo. Edit the file inside the repo
+**"Refusing to write … it is a symbolic link."** `~/.claude/CLAUDE.md` and friends are symlinks into the EEAS repo. Edit the file inside the repo
 (`readlink -f ~/.claude/CLAUDE.md` shows where), then start a new session or `/clear`.
 
 **I edited `CLAUDE.md` but Claude behaves the same.** Memory files are read at session start and held in memory. The change applies after `/clear`,
@@ -22,13 +22,13 @@ then restart Claude Code.
 Codex is optional: `apply.sh --no-codex` skips its part.
 
 **Constant "state your facts" prompts from a hook.** That is ECC's GateGuard. The default profile already relaxes it for routine Bash and for
-the CWCDT repo. Add your scratch folders to `GATEGUARD_EXEMPT_GLOBS`, or see [CUSTOMIZE §7](CUSTOMIZE.md).
+the EEAS repo. Add your scratch folders to `GATEGUARD_EXEMPT_GLOBS`, or see [CUSTOMIZE §7](CUSTOMIZE.md).
 
 **`/context` shows a smaller saving than `measure.sh --real`.** `/context` is a local estimate that mis-assigns part of the trimmed tokens. Trust
 the real request. See [TOKEN-ECONOMY](TOKEN-ECONOMY.md).
 
 **Duplicate rules.** If you installed ECC's rules by hand (`~/.claude/rules/ecc/` is a real directory), its `common/` rules duplicate
-`rules/cwcdt/common/core.md`. Remove `~/.claude/rules/ecc/common`. `check.sh` warns about it.
+`core/rules/common/core.md`. Remove `~/.claude/rules/ecc/common`. `check.sh` warns about it.
 
 **"Settings Warning: unknown key".** Your Claude Code is older than the key (`autoCompactWindow`, `skillListingBudgetFraction`, …). Update Claude
 Code, or remove the key from the profile.
@@ -39,10 +39,10 @@ Code, or remove the key from the profile.
 
 ## FAQ
 
-**Does it work without ECC?** No. The router table names ECC agents and skills (`ecc:planner`, `ecc:tdd-guide`, …). CWCDT is the operating layer on
+**Does it work without ECC?** No. The router table names ECC agents and skills (`ecc:planner`, `ecc:tdd-guide`, …). EEAS is the operating layer on
 top of that toolbox. You could rewrite the table for another toolbox, but that is a different project.
 
-**Does it replace ECC?** No. ECC supplies the agents, skills and hooks; CWCDT decides how they are used, adds the Codex delegation protocol and the
+**Does it replace ECC?** No. ECC supplies the agents, skills and hooks; EEAS decides how they are used, adds the Codex delegation protocol and the
 waves protocol, and trims the context cost of the whole.
 
 **Is it safe to give Claude "standing authorization" to delegate and to launch waves?** The authorizations are scoped (the four-point rule; waves only
