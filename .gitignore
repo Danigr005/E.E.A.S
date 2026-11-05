@@ -1,0 +1,11 @@
+# Privado o local: no subir a GitHub
+backups/
+ECC-src/
+*.log
+*.tmp
+.env
+.env.*
+settings.local.json
+node_modules/
+__pycache__/
+.DS_Store

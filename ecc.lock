@@ -1,0 +1,5 @@
+upstream=https://github.com/affaan-m/ECC.git
+commit=b38be6a7f6350964d59328b52f0624e1d1d552d1
+commit_date=2026-10-29
+version=2.2.3
+reviewed=2026-11-04

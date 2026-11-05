@@ -1,0 +1,45 @@
+{
+  "_comment": "Example stack profile: TypeScript, Python and Rust (plus web). Applied on top of default.json with: scripts/apply.sh --profile ts-py-rust. Copy this file to profiles/<yours>.json and edit: which language servers to enable, which ECC agents your stack never uses.",
+  "env": {
+    "GATEGUARD_EXEMPT_GLOBS": "{{MASTER}}/**,{{HOME}}/.config/Claude/scratch-workspaces/**,/tmp/claude-*/**"
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true
+  },
+  "permissions": {
+    "deny": [
+      "Agent(ecc:bengali-reviewer)",
+      "Agent(ecc:chief-of-staff)",
+      "Agent(ecc:cpp-build-resolver)",
+      "Agent(ecc:cpp-reviewer)",
+      "Agent(ecc:csharp-reviewer)",
+      "Agent(ecc:dart-build-resolver)",
+      "Agent(ecc:django-build-resolver)",
+      "Agent(ecc:django-reviewer)",
+      "Agent(ecc:flutter-reviewer)",
+      "Agent(ecc:fsharp-reviewer)",
+      "Agent(ecc:go-build-resolver)",
+      "Agent(ecc:go-reviewer)",
+      "Agent(ecc:harmonyos-app-resolver)",
+      "Agent(ecc:healthcare-reviewer)",
+      "Agent(ecc:homelab-architect)",
+      "Agent(ecc:java-build-resolver)",
+      "Agent(ecc:java-reviewer)",
+      "Agent(ecc:kotlin-build-resolver)",
+      "Agent(ecc:kotlin-reviewer)",
+      "Agent(ecc:mle-reviewer)",
+      "Agent(ecc:network-architect)",
+      "Agent(ecc:network-config-reviewer)",
+      "Agent(ecc:network-troubleshooter)",
+      "Agent(ecc:opensource-forker)",
+      "Agent(ecc:opensource-packager)",
+      "Agent(ecc:php-reviewer)",
+      "Agent(ecc:pytorch-build-resolver)",
+      "Agent(ecc:ruby-reviewer)",
+      "Agent(ecc:swift-build-resolver)",
+      "Agent(ecc:swift-reviewer)"
+    ]
+  }
+}

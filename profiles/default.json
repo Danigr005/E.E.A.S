@@ -1,0 +1,16 @@
+{
+  "_comment": "Base profile, applied for everyone. scripts/apply.sh merges it into ~/.claude/settings.json (lists = union, objects = merge, scalars = overwrite). Keys starting with _ are ignored; {{MASTER}} and {{HOME}} expand at apply time. Why each value: docs/TOKEN-ECONOMY.md.",
+  "statusLine": {
+    "type": "command",
+    "command": "node {{MASTER}}/statusline.mjs"
+  },
+  "autoCompactWindow": 300000,
+  "skillListingBudgetFraction": 0.005,
+  "skillListingMaxDescChars": 220,
+  "env": {
+    "GATEGUARD_BASH_ROUTINE_DISABLED": "1",
+    "GATEGUARD_EXEMPT_GLOBS": "{{MASTER}}/**,/tmp/claude-*/**",
+    "ECC_SESSION_START_MAX_CHARS": "3000",
+    "ECC_CONTEXT_MONITOR_COST_WARNINGS": "off"
+  }
+}
