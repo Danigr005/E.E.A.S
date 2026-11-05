@@ -82,6 +82,19 @@ Después, pide lo que quieras. `apply.sh` guarda una copia de lo que sustituye (
 Tu `~/.claude/CLAUDE.md` actual se mueve a esa copia, no se fusiona. Copia tus preferencias a la sección «Preferencias del dueño» de
 `lang/<l>/CLAUDE.md`. Edita el repo, nunca el enlace: Claude Code se niega a escribir a través de enlaces simbólicos.
 
+## Nuevo portátil (restaurar todo)
+
+Todo lo que define la metodología está en este repo. En un equipo nuevo:
+
+```bash
+git clone https://github.com/Danigr005/CWCDT.git ~/CLAUDE-PROJECTS/CWCDT
+~/CLAUDE-PROJECTS/CWCDT/scripts/bootstrap.sh --lang es --profile ts-py-rust
+codex login        # y abre `claude` para iniciar sesión
+```
+
+`bootstrap.sh` instala ECC y el plugin de Codex, aplica CWCDT y lo comprueba. **No** está en git, a propósito: el historial de
+conversaciones, los inicios de sesión y los secretos (se rehacen con `claude` / `codex login`).
+
 ## Más información
 
 - [Cómo funciona](docs/es/COMO-FUNCIONA.md) · [How it works](docs/HOW-IT-WORKS.md)

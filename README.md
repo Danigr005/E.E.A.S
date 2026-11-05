@@ -81,6 +81,19 @@ Then just ask for something. `apply.sh` keeps a backup of whatever it replaces (
 Your existing `~/.claude/CLAUDE.md` is moved to that backup, not merged. Copy your own preferences into the "Owner preferences" section of
 `lang/<l>/CLAUDE.md`. Edit the repo, never the symlink: Claude Code refuses to write through symlinks.
 
+## New laptop (restore everything)
+
+Everything that defines the methodology lives in this repo. On a fresh machine:
+
+```bash
+git clone https://github.com/Danigr005/CWCDT.git ~/CLAUDE-PROJECTS/CWCDT
+~/CLAUDE-PROJECTS/CWCDT/scripts/bootstrap.sh --lang en --profile ts-py-rust
+codex login        # and open `claude` to sign in
+```
+
+`bootstrap.sh` installs ECC and the Codex plugin, applies CWCDT and checks it. Deliberately **not** in git: conversation
+history, logins and secrets (redo them with `claude` / `codex login`).
+
 ## Learn more
 
 - [How it works](docs/HOW-IT-WORKS.md) · [Cómo funciona](docs/es/COMO-FUNCIONA.md)

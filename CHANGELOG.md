@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- `scripts/bootstrap.sh`: one-shot restore on a new machine (toolbox plugins + apply + check). README "New laptop" section.
+
 ## 0.1.0 — 2026-11-05
 First public release of CWCDT (Code With Codex Dev Team).
 
