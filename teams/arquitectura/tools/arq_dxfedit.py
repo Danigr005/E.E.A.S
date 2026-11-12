@@ -10,7 +10,7 @@ ops.json: list of operations, coordinates and sizes in METRES (converted to the 
   {"op": "rect", "min": [x,y], "max": [x,y]}
   {"op": "circle", "center": [x,y], "radius": r}
   {"op": "text", "at": [x,y], "text": "...", "height": 0.15}
-  {"op": "note", "at": [x,y], "text": "H1: pasillo 0,80 m < 1,00 m"}      (text with a leader circle)
+  {"op": "note", "at": [x,y], "text": "H1: pasillo 0,80 m (ejemplo ilustrativo)"}      (text with a leader circle)
 Each op may set "kind": "correccion" (red, layer EEAS_CORRECCION) or "propuesta" (green, layer EEAS_PROPUESTA);
 default is "correccion". Everything lands on those two layers so it can be hidden or deleted in one step.
 Unit-less drawings: pass --assume-units m|cm|mm after confirming the unit; otherwise the tool refuses.

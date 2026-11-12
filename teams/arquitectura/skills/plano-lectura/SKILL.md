@@ -11,7 +11,7 @@ Objetivo: convertir un plano en un **modelo de datos con procedencia**: cada dat
 Tipo de actuación (obra nueva, reforma, cambio de uso, ampliación) · emplazamiento (municipio y comunidad autónoma) · uso y número de plantas. Si el dueño no lo sabe, anótalo como hipótesis explícita.
 
 ## 2. Ingesta
-- PDF/imagen: `arq ingest <fichero> --out work/ingesta --dpi 200` (A0/A1: `--dpi 150`; plano pequeño o con cotas diminutas: `--dpi 300`). Si el PDF no tiene capa de texto se hace OCR solo (inglés; si falta `spa`, avisa de que los acentos pueden fallar).
+- PDF/imagen: `arq ingest <fichero> --out work/ingesta --dpi 200` (A0/A1: `--dpi 150`; plano pequeño o con cotas diminutas: `--dpi 300`). Si no hay capa de texto se hace OCR solo (español+inglés si `spa` está instalado, si no inglés y avisa de que los acentos pueden fallar).
 - DXF/DWG: ver skill `plano-cad-bim`. IFC: idem. Si hay vectorial **y** PDF, el vectorial manda para geometría; el PDF, para lo que el dibujante quiso mostrar.
 - Abre primero `pNN_overview.png` con Read: identifica qué hoja es cada cosa (situación, plantas, secciones, alzados, cuadros de superficies, cajetín, leyenda).
 - Lee después los **mosaicos** `pNN_tiles/` en resolución completa: ahí se leen cotas, rótulos y símbolos. No saques cotas del overview.
@@ -45,4 +45,4 @@ Lo ilegible o ausente **no se rellena**: va a la lista "información faltante" y
 Planta vs sección (alturas, niveles, escaleras) · planta vs alzado (huecos, cotas) · cuadro de superficies vs suma de estancias (`arq areas`) · cotas parciales vs total · numeración y nombres de estancias iguales en todas las hojas · ejes estructurales iguales en todas las plantas.
 
 ## 7. Salida
-Escribe `work/modelo-plano.md` (legible) y `work/modelo-plano.json` (datos) con las secciones anteriores, y una lista final: **hojas procesadas · escala calibrada sí/no · datos ilegibles · incoherencias detectadas**. Termina con el resumen de 5 líneas para el dueño.
+Escribe `work/modelo-plano.md` (legible) y `work/modelo-plano.json` (datos) con las secciones anteriores, y `work/cuadro-superficies.csv` (cabecera `name;declared_m2;width_m;depth_m`, ancho y fondo solo si son rectángulos leídos) para `arq areas work/cuadro-superficies.csv [--built-total X]`, y una lista final: **hojas procesadas · escala calibrada sí/no · datos ilegibles · incoherencias detectadas**. Termina con el resumen de 5 líneas para el dueño.

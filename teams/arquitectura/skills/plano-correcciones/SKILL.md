@@ -19,7 +19,7 @@ Una propuesta solo vale si **resuelve el hallazgo sin crear otro**. Trabaja siem
 
 ## Marcado y entregables
 - **DXF**: `arq dxfedit original.dxf ops.json` escribe `original_eeas.dxf` (capas `EEAS_CORRECCION` en rojo y `EEAS_PROPUESTA` en verde; se pueden apagar o borrar de una vez). Nunca sobrescribe el original.
-- **PDF/imagen**: sobre el mosaico o overview, `arq markup tile.png hallazgos.json salida.png` dibuja cajas por severidad con el ID del hallazgo.
+- **PDF/imagen**: sobre el mosaico o overview, `arq markup tile.png hallazgos.json salida.png` dibuja cajas por severidad con el ID del hallazgo. `hallazgos.json` = `[{"id","severity","label","bbox":[x0,y0,x1,y1]}]` con bbox en píxeles de ese PNG (el «Dónde» del hallazgo ya trae mosaico y bbox). Correspondencia de severidad: BLOQUEANTE→`critico`, GRAVE→`alto`, MODERADO→`medio`, LEVE→`bajo`, OBSERVACION→`info`.
 - **Croquis alternativo**: si la propuesta cambia la distribución, dibuja el "antes/después" como DXF (polilíneas de las estancias nuevas, con cotas) y renderízalo con `arq dxf render` para revisarlo con Read.
 - Numeración coherente: `H1` (hallazgo) → `P1a/P1b` (alternativas) → `P1a` recomendada.
 - Cuando el cambio afecta a superficies, recalcula con `arq areas` y deja el cuadro actualizado.

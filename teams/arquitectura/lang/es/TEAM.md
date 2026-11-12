@@ -23,7 +23,9 @@ Equipo para **leer planos de edificación, juzgar si son viables de verdad y pro
 - **Normativa solo de fuente**: skill `cte-verificacion`. Ninguna cifra o artículo de memoria; `arq cte search` sobre el texto oficial del CTE; lo demás (RITE, REBT, Código Estructural, accesibilidad autonómica, urbanismo) por búsqueda web oficial. Estados: Verificado / [VERIFICAR] / [NO CONSTA].
 - **Escala**: nunca fiarse del rótulo; calibrar con una cota impresa (`arq scale`).
 - **Procedencia**: cada dato leído/medido/inferido/ilegible. Lo ilegible no se rellena.
-- BLOQUEANTE o GRAVE solo con dato leído o medido y norma Verificada. Sin ficha urbanística real, urbanismo = NO CONCLUYENTE.
+- BLOQUEANTE o GRAVE solo con dato leído o medido y norma Verificada (fiabilidad alta). Sin ficha urbanística real, urbanismo = NO CONCLUYENTE.
+- **Ámbitos críticos**: coherencia, incendio-accesibilidad, habitabilidad-energía, estructura y urbanismo (instalaciones puede quedar [VERIFICAR]).
+- **Traspaso**: cada especialista escribe `work/hallazgos-<ámbito>.md` (IDs `COH-`, `INC-`, `HAB-`, `EST-`, `INS-`, `URB-`); el orquestador deduplica y consolida `work/hallazgos.md`; el revisor devuelve MANTENER/REBAJAR/DESCARTAR por ID; proponente y mediciones leen solo `work/hallazgos.md`. Formato en `plano-viabilidad`.
 - Los originales no se tocan; las correcciones van sobre copias. No se emiten planos «para visado».
 - Un veredicto «viable» exige haber analizado todos los ámbitos críticos; si no, NO CONCLUYENTE.
 
@@ -32,4 +34,5 @@ Equipo para **leer planos de edificación, juzgar si son viables de verdad y pro
 - **Codex** (las cuatro condiciones comunes): mantenimiento de las herramientas `teams/arquitectura/tools/*.py` y sus tests, conversiones mecánicas de formato, extracción masiva de tablas ya especificadas, scripts `ifcopenshell`/`ezdxf` para tareas concretas con comando de aceptación. **Nunca** lectura de planos ni juicio normativo.
 
 ## Herramientas
+Scripts propios con las librerías del entorno (ifcopenshell, PyNite, python-docx): `"$HOME/.local/share/eeas/arquitectura-venv/bin/python" -I script.py` (o `$EEAS_ARQ_VENV/bin/python`); pide confirmación como cualquier ejecución de código.
 `arq` (ingest, scale, dxf, ifc, areas, markup, dxfedit, cte, demo), venv Python 3.12 (ezdxf, ifcopenshell, ifctester, pypdfium2, pdfplumber, shapely, opencv, pytesseract, PyNite, python-docx), skills `plano-*` y `cte-verificacion`, 10 agentes `arq-*`. De apoyo del toolbox común: `deep-research` (normativa o precedentes), `anthropic-skills:docx`/`pdf` (informes), `ecc:architecture-decision-records` (decisiones de diseño que el dueño adopte).

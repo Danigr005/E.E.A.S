@@ -27,6 +27,7 @@ TOP_LINES = 60
 MIN_TILE = 256
 MAX_PIXELS = 250_000_000  # refuse to render a page larger than this
 MM_PER_INCH = 25.4
+OCR_MIN_LONG_SIDE = 4000  # rasters smaller than this are upscaled (up to 3x) before OCR
 
 
 def parse_pages(spec: str | None, total: int) -> list[int]:
@@ -55,11 +56,12 @@ def make_tiles(img: Image.Image, out: Path, tile: int, overlap: int) -> list[dic
     return tiles
 
 
-def ocr_words(img: Image.Image, lang: str) -> list[dict]:
+def _ocr_pass(work: Image.Image, lang: str, factor: float) -> list[dict]:
+    """One sparse-text OCR pass; boxes are divided by `factor` (the upscale applied to `work`)."""
     import pytesseract
 
     try:
-        data = pytesseract.image_to_data(img, lang=lang, output_type=pytesseract.Output.DICT)
+        data = pytesseract.image_to_data(work, lang=lang, config="--psm 11", output_type=pytesseract.Output.DICT)
     except pytesseract.TesseractNotFoundError:
         print("warning: tesseract not installed; no OCR text. Read dimensions visually from the tiles.", file=sys.stderr)
         return []
@@ -68,9 +70,52 @@ def ocr_words(img: Image.Image, lang: str) -> list[dict]:
     words = []
     for i, text in enumerate(data["text"]):
         if text.strip() and float(data["conf"][i]) >= 30:
-            words.append({"text": text, "x0": data["left"][i], "y0": data["top"][i],
-                          "x1": data["left"][i] + data["width"][i], "y1": data["top"][i] + data["height"][i],
+            words.append({"text": text, "x0": round(data["left"][i] / factor), "y0": round(data["top"][i] / factor),
+                          "x1": round((data["left"][i] + data["width"][i]) / factor),
+                          "y1": round((data["top"][i] + data["height"][i]) / factor),
                           "conf": float(data["conf"][i])})
+    return words
+
+
+def _overlaps(a: dict, b: dict) -> bool:
+    return a["x0"] < b["x1"] and b["x0"] < a["x1"] and a["y0"] < b["y1"] and b["y0"] < a["y1"]
+
+
+def default_ocr_lang() -> str:
+    """spa+eng when the Spanish traineddata is installed, otherwise eng (with a warning: accents may be lost)."""
+    import pytesseract
+
+    try:
+        langs = set(pytesseract.get_languages(config=""))
+    except Exception:
+        return "eng"
+    if "spa" in langs:
+        return "spa+eng" if "eng" in langs else "spa"
+    print("note: tesseract has no Spanish data (spa); OCR runs in English, accents may be lost.", file=sys.stderr)
+    return "eng"
+
+
+def ocr_words(img: Image.Image, lang: str | None) -> list[dict]:
+    """OCR for plans: sparse-text mode on an upscaled copy (tiny dimension text is where OCR fails), plus a pass on the
+    page turned clockwise that keeps only numeric tokens (vertical dimension lines). Boxes are in original pixels;
+    words from the rotated pass carry "rot": true."""
+    lang = lang or default_ocr_lang()
+    factor = min(3.0, max(1.0, OCR_MIN_LONG_SIDE / max(img.size)))
+    if factor <= 1.2:
+        factor = 1.0
+    scaled = img.resize((round(img.width * factor), round(img.height * factor)), Image.LANCZOS) if factor > 1.0 else img
+    words = _ocr_pass(scaled, lang, factor)
+    height = img.height
+    rotated = _ocr_pass(scaled.transpose(Image.ROTATE_270), lang, factor)
+    for w in rotated:
+        if not any(ch.isdigit() for ch in w["text"]):
+            continue
+        # Vertical dimension text reads bottom-to-top, so turn the page clockwise. PIL ROTATE_270 maps original
+        # (x, y) to (height - y, x): invert the box.
+        box = {"text": w["text"], "x0": w["y0"], "x1": w["y1"], "y0": height - w["x1"], "y1": height - w["x0"],
+               "conf": w["conf"], "rot": True}
+        if not any(_overlaps(box, o) for o in words):
+            words.append(box)
     return words
 
 
@@ -158,7 +203,7 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--overlap", type=int, default=150)
     ap.add_argument("--pages")
     ap.add_argument("--ocr", action="store_true", help="OCR the page (default for images)")
-    ap.add_argument("--lang", default="eng", help="tesseract languages, e.g. spa+eng if installed")
+    ap.add_argument("--lang", default=None, help="tesseract languages (default: spa+eng if installed, else eng)")
     args = ap.parse_args(argv)
     args.dpi_explicit = args.dpi is not None
     args.dpi = args.dpi or 200

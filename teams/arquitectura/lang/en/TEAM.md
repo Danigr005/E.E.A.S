@@ -23,7 +23,9 @@ A team to **read building plans, judge whether they are really viable, and propo
 - **Regulations only from source**: skill `cte-verificacion`. No figure or article from memory; `arq cte search` over the official CTE text; everything else (RITE, REBT, Código Estructural, regional accessibility, urbanism) via official web search. States: Verified / [VERIFICAR] / [NO CONSTA].
 - **Scale**: never trust the label; calibrate with a printed dimension (`arq scale`).
 - **Provenance**: every datum is read/measured/inferred/illegible. Illegible data is not filled in.
-- BLOCKING or SERIOUS only with a read or measured datum and a Verified rule. Without the real urban-planning sheet, urbanism = INCONCLUSIVE.
+- BLOCKING or SERIOUS only with a read or measured datum and a Verified rule (high reliability). Without the real urban-planning sheet, urbanism = INCONCLUSIVE.
+- **Critical scopes**: coherence, fire-accessibility, habitability-energy, structure and urbanism (installations may stay [VERIFICAR]).
+- **Hand-off**: each specialist writes `work/hallazgos-<scope>.md` (IDs `COH-`, `INC-`, `HAB-`, `EST-`, `INS-`, `URB-`); the orchestrator deduplicates into `work/hallazgos.md`; the reviewer returns KEEP/DOWNGRADE/DROP per ID; proposer and takeoff read only `work/hallazgos.md`. Format in `plano-viabilidad`.
 - Originals are never touched; corrections go on copies. No "for permit" drawings are issued.
 - A "viable" verdict requires every critical scope to have been analysed; otherwise INCONCLUSIVE.
 
@@ -32,4 +34,5 @@ A team to **read building plans, judge whether they are really viable, and propo
 - **Codex** (the four common conditions): maintenance of `teams/arquitectura/tools/*.py` and their tests, mechanical format conversions, bulk extraction of already-specified tables, targeted `ifcopenshell`/`ezdxf` scripts with an acceptance command. **Never** plan reading or regulatory judgment.
 
 ## Tools
+Own scripts using the environment's libraries (ifcopenshell, PyNite, python-docx): `"$HOME/.local/share/eeas/arquitectura-venv/bin/python" -I script.py` (or `$EEAS_ARQ_VENV/bin/python`); it prompts for approval like any code execution.
 `arq` (ingest, scale, dxf, ifc, areas, markup, dxfedit, cte, demo), Python 3.12 venv (ezdxf, ifcopenshell, ifctester, pypdfium2, pdfplumber, shapely, opencv, pytesseract, PyNite, python-docx), skills `plano-*` and `cte-verificacion`, 10 `arq-*` agents. Supporting common toolbox: `deep-research`, `anthropic-skills:docx`/`pdf`, `ecc:architecture-decision-records`.

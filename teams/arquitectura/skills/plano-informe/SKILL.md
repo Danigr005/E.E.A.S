@@ -14,7 +14,7 @@ Carpeta de salida: `informes/AAAA-MM-DD-<proyecto>/` en el proyecto (`informe.md
 4. **Hallazgos detallados** con el formato de `plano-viabilidad` (dónde, hecho, exigencia con estado, diferencia, consecuencia, corrección).
 5. **Propuestas de corrección**: alternativas, recomendada, efectos y coste orientativo, enlaces a imágenes y DXF.
 6. **Verificaciones pendientes**: normas `[VERIFICAR]`/`[NO CONSTA]`, datos a confirmar, documentos que faltan (ficha urbanística, ordenanzas…), cálculos que debe hacer un técnico (estructura, instalaciones).
-7. **Anexos**: modelo del plano, cuadro de superficies verificado (`arq areas`), fuentes normativas con documento, página y fecha de consulta, imágenes anotadas.
+7. **Anexos**: modelo del plano, cuadro de superficies verificado (`arq areas work/cuadro-superficies.csv`), fuentes normativas con documento, página y fecha de consulta, imágenes anotadas.
 8. **Descargo**: prechequeo técnico asistido; no certifica cumplimiento ni sustituye al técnico competente que firma el proyecto.
 
 ## Estilo

@@ -3,7 +3,7 @@
 Usage:
   arq demo <out_dir>
 Writes demo_plan.dxf, demo_plan.pdf (vector), demo_plan.ifc and demo_rooms.csv. Known defects (the test oracle):
-  D1  corridor 0.80 m wide
+  D1  corridor 0.80 m wide (illustrative: the real minimum depends on use and occupancy, DB-SI 3 and DB-SUA)
   D2  dimension of the living room shows text "5.5" but measures 5.0 m
   D3  declared area of the bedroom is 12.0 m2 but 3.5 x 3.0 = 10.5 m2
   D4  IFC door IfcDoor 'P-aseo' is 0.60 m wide
