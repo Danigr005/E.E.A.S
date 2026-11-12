@@ -74,11 +74,18 @@ def main(argv: list[str]) -> int:
         status = "OK" if abs(diff) / max(a.useful_total, 1e-9) <= a.tol else "MISMATCH"
         problems += status != "OK"
         print(f"declared useful total {a.useful_total:.2f}: difference {diff:+.2f} m2 [{status}]")
-    if a.built_total and a.useful_total:
-        ratio = a.useful_total / a.built_total
-        status = "OK" if MIN_RATIO <= ratio <= MAX_RATIO else "SUSPICIOUS"
-        problems += status != "OK"
-        print(f"useful/built = {ratio:.2f} [{status}: expected {MIN_RATIO}-{MAX_RATIO}]")
+    if a.built_total:
+        # Without --useful-total the rooms listed are taken as the useful area (they must be a subset of the built one).
+        useful = a.useful_total if a.useful_total is not None else total
+        if useful > a.built_total * (1 + a.tol):
+            print(f"useful {useful:.2f} m2 EXCEEDS built {a.built_total:.2f} m2 [MISMATCH: impossible; "
+                  f"check which rooms the built total includes]")
+            problems += 1
+        else:
+            ratio = useful / a.built_total
+            status = "OK" if MIN_RATIO <= ratio <= MAX_RATIO else "SUSPICIOUS"
+            problems += status != "OK"
+            print(f"useful/built = {ratio:.2f} [{status}: expected {MIN_RATIO}-{MAX_RATIO}]")
     print(f"{problems} problem(s)")
     return 1 if problems else 0
 

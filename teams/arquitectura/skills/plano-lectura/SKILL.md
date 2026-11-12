@@ -15,6 +15,7 @@ Tipo de actuación (obra nueva, reforma, cambio de uso, ampliación) · emplazam
 - DXF/DWG: ver skill `plano-cad-bim`. IFC: idem. Si hay vectorial **y** PDF, el vectorial manda para geometría; el PDF, para lo que el dibujante quiso mostrar.
 - Abre primero `pNN_overview.png` con Read: identifica qué hoja es cada cosa (situación, plantas, secciones, alzados, cuadros de superficies, cajetín, leyenda).
 - Lee después los **mosaicos** `pNN_tiles/` en resolución completa: ahí se leen cotas, rótulos y símbolos. No saques cotas del overview.
+- **El OCR de cifras no es fiable**: en una prueba real leyó «34,2» como «342» y «134,2», y omitió cotas como «14,70» (texto pequeño o vertical). Un número que sale solo del OCR es **inferido**: no pasa a «leído» hasta verlo en el mosaico, y no sostiene ningún hallazgo BLOQUEANTE/GRAVE. Si las cotas son diminutas, repite la ingesta a más resolución (`--dpi 300`, o dibuja el plano al doble de tamaño).
 - `pNN_words.json` da el texto con coordenadas; `pNN_vectors.json`, los segmentos más largos (útil para comprobar longitudes de muros).
 
 ## 3. Escala: nunca fiarse solo del rótulo
