@@ -17,6 +17,8 @@ Las herramientas viven en el entorno del equipo (`arq`, Python 3.12 con ezdxf, i
 ## DWG
 No se lee directo. Convierte a DXF con `dwg2dxf` (LibreDWG) o ODA File Converter **si están instalados** (`command -v dwg2dxf ODAFileConverter`). Si no, pide al dueño que exporte a DXF o PDF desde su CAD; no instales nada con `sudo` por tu cuenta.
 
+**La conversión no es de fiar sin comprobarla.** LibreDWG es ingeniería inversa y puede perder entidades, capas o cotas sin avisar (una prueba con el escritor `dxf2dwg` perdió todo). Tras `dwg2dxf -y -o out.dxf f.dwg`, ejecuta `arq dxf summary out.dxf` y comprueba que hay entidades y capas con nombre razonable. Si el resumen sale vacío o con capas mutiladas, no analices ese DXF: pide PDF o DXF exportado desde el CAD original. Aunque salga bien, contrasta alguna cota o superficie con el PDF del mismo plano si existe, y marca los datos como «convertidos desde DWG».
+
 ## IFC / BIM
 - `arq ifc summary|spaces|openings f.ifc`: plantas, estancias con área (Qto o geometría) y huecos con ancho/alto. Las longitudes y áreas se convierten a metros con las unidades declaradas del modelo (la primera línea las imprime); si el modelo no las declara, la herramienta se niega.
 - `arq ifc check f.ifc reglas.ids`: valida contra un IDS (buildingSMART). Para reglas del proyecto (p. ej. toda puerta de evacuación ≥ X m), escribe el IDS con el valor **verificado** en el CTE, nunca de memoria.
