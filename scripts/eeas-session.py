@@ -7,6 +7,8 @@ with the team's TEAM.md as additional context, or a prompt to choose a team when
 import json
 import os
 import re
+import shlex
+import subprocess
 import sys
 from pathlib import Path
 
@@ -69,6 +71,33 @@ def build_context(cwd: Path) -> str:
     return f"EEAS · active team: {team_id} (set in {marker}; change it only if the owner explicitly asks)\n\n{text}"
 
 
+def start_team_services(cwd: Path) -> None:
+    """Run the background services the owner registered for the project's team (CLAUDE_DIR/eeas.services/<team>).
+
+    One command per line (shlex syntax, `#` comments). Each runs detached and is never waited for, so the session starts
+    at once; commands must be idempotent (SessionStart also fires on resume, clear and compact). Projects without a team,
+    or whose team has no services file, start nothing.
+    """
+    marker = find_marker(cwd)
+    if marker is None:
+        return
+    team_id = marker.read_text(encoding="utf-8", errors="replace").strip()
+    if not TEAM_ID.match(team_id):
+        return
+    services = CLAUDE_DIR / "eeas.services" / team_id
+    if not services.is_file():
+        return
+    for line in services.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        try:
+            subprocess.Popen(shlex.split(line), stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL, start_new_session=True, cwd=str(cwd) if cwd.is_dir() else None)
+        except (OSError, ValueError):
+            continue  # a broken service line must not break the session
+
+
 def main() -> None:
     try:
         payload = json.load(sys.stdin)
@@ -76,8 +105,13 @@ def main() -> None:
         payload = {}
     if not isinstance(payload, dict):
         payload = {}
+    cwd = Path(str(payload.get("cwd") or os.getcwd()))
     try:
-        context = build_context(Path(str(payload.get("cwd") or os.getcwd())))
+        start_team_services(cwd)
+    except Exception:  # services are a convenience: the team context below matters more
+        pass
+    try:
+        context = build_context(cwd)
     except Exception as error:  # a session-start hook must never fail the session
         context = f"EEAS · could not load the team ({type(error).__name__}). Check .claude/eeas-team and the EEAS repo at {MASTER}."
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": context}}))

@@ -1,6 +1,6 @@
 {
-  "id": "sdd",
-  "name": "SDD Dev Team",
+  "id": "spec-kit",
+  "name": "Spec Kit Dev Team",
   "description": "Spec-driven development with GitHub spec-kit: constitution, specify, plan, tasks, implement.",
   "setup": "setup.sh"
 }

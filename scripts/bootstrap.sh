@@ -36,11 +36,18 @@ else
   APPLY_ARGS+=(--no-codex)
 fi
 
-echo "== SDD Dev Team (spec-kit CLI) =="
+echo "== Spec Kit Dev Team (spec-kit CLI) =="
 if command -v uv >/dev/null; then
   command -v specify >/dev/null || uv tool install specify-cli --from git+https://github.com/github/spec-kit.git || true
 else
-  echo "uv not found: install it (https://docs.astral.sh/uv/) to use the SDD Dev Team; teams/sdd/setup.sh installs specify on demand."
+  echo "uv not found: install it (https://docs.astral.sh/uv/) to use the Spec Kit Dev Team; teams/spec-kit/setup.sh installs specify on demand."
+fi
+
+echo "== Architecture Review Team (tools + CTE texts) =="
+if command -v uv >/dev/null; then
+  "$MASTER/teams/arquitectura/setup.sh" --tools-only || echo "arquitectura tools setup failed; retry with teams/arquitectura/setup.sh --tools-only"
+else
+  echo "uv not found: install it (https://docs.astral.sh/uv/) to use the Architecture Review Team."
 fi
 
 echo "== EEAS =="

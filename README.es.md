@@ -28,7 +28,8 @@ equipo en `.claude/eeas-team`; un hook de inicio de sesión lo carga cada vez y 
 | Equipo | Para |
 |---|---|
 | `projects-master` — Projects Master Dev Team | Crear y mantener proyectos de software (antes CWCDT) |
-| `sdd` — SDD Dev Team | Desarrollo guiado por especificaciones con [GitHub spec-kit](https://github.com/github/spec-kit) |
+| `spec-kit` — Spec Kit Dev Team | Desarrollo guiado por especificaciones con [GitHub spec-kit](https://github.com/github/spec-kit) |
+| `arquitectura` — Architecture Review Team | Lee planos de edificación (PDF, imagen, DXF, IFC), juzga su viabilidad real según el CTE y propone correcciones |
 
 `scripts/eeas-team.sh list | show | set <id> [dir]` los gestiona; para añadir uno, pídeselo a Claude (skill `eeas-teams`) o copia `teams/projects-master`.
 

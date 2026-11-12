@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Launcher for the arquitectura team tools. Runs arq_<tool>.py inside the team venv.
+#   arq <ingest|scale|dxf|ifc|areas|markup|dxfedit|cte|demo> [args...]
+set -euo pipefail
+HERE="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+VENV="${EEAS_ARQ_VENV:-$HOME/.local/share/eeas/arquitectura-venv}"
+if [[ ! -x "$VENV/bin/python" ]]; then
+  echo "arq: venv missing at $VENV. Run teams/arquitectura/setup.sh from the EEAS repo." >&2
+  exit 1
+fi
+tool="${1:-}"
+if [[ -z "$tool" || ! -f "$HERE/arq_$tool.py" ]]; then
+  echo "usage: arq <ingest|scale|dxf|ifc|areas|markup|dxfedit|cte|demo> [args...]" >&2
+  exit 2
+fi
+shift
+exec "$VENV/bin/python" -I "$HERE/arq_$tool.py" "$@"

@@ -1,0 +1,6 @@
+{
+  "id": "arquitectura",
+  "name": "Architecture Review Team",
+  "description": "Reads building plans (PDF, image, DXF, IFC), judges real viability against the Spanish CTE and urbanism, and proposes corrections.",
+  "setup": "setup.sh"
+}

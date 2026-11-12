@@ -1,10 +1,10 @@
-# SDD Dev Team
+# Spec Kit Dev Team
 
 Equipo de desarrollo guiado por especificaciones con [GitHub spec-kit](https://github.com/github/spec-kit) (CLI `specify`). La especificación manda:
 el código se deriva de ella. Añade a la capa común (reparto Claude↔Codex, tokens, olas) este flujo.
 
 ## Preparación del proyecto
-- Si falta `.specify/` en el proyecto, ejecuta `teams/sdd/setup.sh` del repo EEAS (instala `specify` con `uv` si no existe y crea el andamiaje con
+- Si falta `.specify/` en el proyecto, ejecuta `teams/spec-kit/setup.sh` del repo EEAS (instala `specify` con `uv` si no existe y crea el andamiaje con
   integraciones Claude y Codex). Es idempotente. No lo repitas si `.specify/` ya existe.
 - Los comandos del ciclo son skills del proyecto: `/speckit-constitution`, `/speckit-specify`, `/speckit-clarify`, `/speckit-plan`,
   `/speckit-tasks`, `/speckit-analyze`, `/speckit-checklist`, `/speckit-implement`. Invócalos tú con la herramienta Skill según la fase; el

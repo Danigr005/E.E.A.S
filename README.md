@@ -27,7 +27,8 @@ in `.claude/eeas-team`; a SessionStart hook loads it every session, and Claude a
 | Team | For |
 |---|---|
 | `projects-master` — Projects Master Dev Team | Building and maintaining software projects (formerly CWCDT) |
-| `sdd` — SDD Dev Team | Spec-driven development with [GitHub spec-kit](https://github.com/github/spec-kit) |
+| `spec-kit` — Spec Kit Dev Team | Spec-driven development with [GitHub spec-kit](https://github.com/github/spec-kit) |
+| `arquitectura` — Architecture Review Team | Reads building plans (PDF, image, DXF, IFC), judges real viability against the Spanish CTE and proposes corrections |
 
 `scripts/eeas-team.sh list | show | set <id> [dir]` manages them; to add one, ask Claude (skill `eeas-teams`) or copy `teams/projects-master`.
 

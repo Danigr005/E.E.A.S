@@ -65,6 +65,14 @@ for manifest in "$MASTER"/teams/*/team.json; do
   if [[ -f "$MASTER/teams/$id/lang/es/TEAM.md" || -f "$MASTER/teams/$id/lang/en/TEAM.md" ]]; then ok "team $id"; else bad "team $id has no TEAM.md"; fi
 done
 
+if [[ -f "$MASTER/teams/arquitectura/team.json" ]]; then
+  if command -v arq >/dev/null 2>&1 && [[ -x "${EEAS_ARQ_VENV:-$HOME/.local/share/eeas/arquitectura-venv}/bin/python" ]]; then
+    ok "arquitectura tools (arq + venv)"
+  else
+    warn "arquitectura tools not installed: run teams/arquitectura/setup.sh --tools-only (only needed to use that team)"
+  fi
+fi
+
 echo "== repo =="
 en_lines="$(wc -l <"$MASTER/lang/en/CLAUDE.md")"
 es_lines="$(wc -l <"$MASTER/lang/es/CLAUDE.md")"

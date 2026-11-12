@@ -38,3 +38,15 @@ AFFILIATION AND TRADEMARKS
 EEAS is an independent community project. It is not affiliated with, sponsored by or endorsed by Anthropic, OpenAI or the authors of ECC.
 "Claude" and "Claude Code" are trademarks of Anthropic, PBC. "Codex", "ChatGPT" and "OpenAI" are trademarks of OpenAI. They are used here only
 to describe compatibility. Model names mentioned in the documentation are examples and may change.
+
+ARCHITECTURE REVIEW TEAM (teams/arquitectura)
+
+- teams/arquitectura/skills/cte-verificacion/references/01-protocolo-normativa.md and 02-mapa-normativo-espana.md are copied from
+  https://github.com/Pau-Gallego-Cistero/arquitectura-es-skill (commit 285c25b), MIT License, Copyright (c) 2026 Pau Gallego Cistero. The bodies are
+  unmodified; each file starts with a provenance comment. The MIT permission notice of that repository applies to those two files.
+- The checklists in the plan-review skills were written independently, inspired by the structure of
+  https://github.com/constructelligence-lab/construction-agent-skills (CC BY 4.0, Constructelligence). No text is copied.
+- The official CTE Documentos Basicos are not bundled: `arq cte fetch` downloads them on the user's machine from codigotecnico.org (Spanish Ministry
+  of Housing and Urban Agenda) into ~/.local/share/eeas/arquitectura/cte, for local consultation.
+- Python dependencies (ezdxf, ifcopenshell, ifctester, pypdfium2, pdfplumber, shapely, opencv-python-headless, pytesseract, PyNite, python-docx,
+  openpyxl, numpy, Pillow, matplotlib) are installed from PyPI under their own licenses (see teams/arquitectura/requirements.txt).

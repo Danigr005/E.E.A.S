@@ -39,7 +39,17 @@
       "Agent(ecc:pytorch-build-resolver)",
       "Agent(ecc:ruby-reviewer)",
       "Agent(ecc:swift-build-resolver)",
-      "Agent(ecc:swift-reviewer)"
+      "Agent(ecc:swift-reviewer)",
+      "Agent(ecc:agent-evaluator)",
+      "Agent(ecc:conversation-analyzer)",
+      "Agent(ecc:gan-evaluator)",
+      "Agent(ecc:gan-generator)",
+      "Agent(ecc:gan-planner)",
+      "Agent(ecc:harness-optimizer)",
+      "Agent(ecc:loop-operator)",
+      "Agent(ecc:opensource-sanitizer)",
+      "Agent(ecc:rag-pipeline-reviewer)",
+      "mcp__plugin_ecc_chrome-devtools"
     ]
   }
 }

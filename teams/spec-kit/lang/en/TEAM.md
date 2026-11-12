@@ -1,10 +1,10 @@
-# SDD Dev Team
+# Spec Kit Dev Team
 
 Spec-driven development team built on [GitHub spec-kit](https://github.com/github/spec-kit) (`specify` CLI). The spec rules: code is derived from
 it. On top of the common layer (Claude↔Codex split, tokens, waves) it adds this flow.
 
 ## Project setup
-- If the project has no `.specify/`, run `teams/sdd/setup.sh` from the EEAS repo (installs `specify` via `uv` if missing and scaffolds with
+- If the project has no `.specify/`, run `teams/spec-kit/setup.sh` from the EEAS repo (installs `specify` via `uv` if missing and scaffolds with
   Claude and Codex integrations). Idempotent. Do not repeat it when `.specify/` exists.
 - The cycle commands are project skills: `/speckit-constitution`, `/speckit-specify`, `/speckit-clarify`, `/speckit-plan`, `/speckit-tasks`,
   `/speckit-analyze`, `/speckit-checklist`, `/speckit-implement`. You invoke them with the Skill tool by phase; the owner only says what they want.
